@@ -306,6 +306,217 @@ input[type=range]::-webkit-slider-thumb {
   </div>
 </div>
 
+<!-- High-Quality Translation Button -->
+<div id="custom-translate" style="position:fixed;top:22px;right:22px;z-index:1000;">
+  <button id="translateBtn" style="background:rgba(26,38,32,0.92);color:var(--sage);border:1.5px solid var(--sage);border-radius:32px;padding:10px 22px;font-family:'Jost',sans-serif;font-size:13px;letter-spacing:0.12em;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,0.08);transition:background 0.2s;">
+    🌐 Translate
+  </button>
+  <div id="langMenu" style="display:none;position:absolute;top:48px;right:0;background:rgba(44,62,53,0.98);border-radius:18px;box-shadow:0 4px 24px rgba(0,0,0,0.13);padding:10px 0;min-width:170px;overflow:hidden;">
+    <button class="lang-opt" data-lang="en">English</button>
+    <button class="lang-opt" data-lang="es">Español</button>
+    <button class="lang-opt" data-lang="fr">Français</button>
+    <button class="lang-opt" data-lang="de">Deutsch</button>
+    <button class="lang-opt" data-lang="zh-CN">中文</button>
+    <button class="lang-opt" data-lang="ja">日本語</button>
+    <button class="lang-opt" data-lang="ru">Русский</button>
+    <button class="lang-opt" data-lang="ar">العربية</button>
+    <button class="lang-opt" data-lang="pt">Português</button>
+    <button class="lang-opt" data-lang="hi">हिन्दी</button>
+    <button class="lang-opt" data-lang="it">Italiano</button>
+    <button class="lang-opt" data-lang="ko">한국어</button>
+    <button class="lang-opt" data-lang="tr">Türkçe</button>
+    <button class="lang-opt" data-lang="th">ไทย</button>
+    <button class="lang-opt" data-lang="pl">Polski</button>
+    <button class="lang-opt" data-lang="nl">Nederlands</button>
+    <button class="lang-opt" data-lang="sv">Svenska</button>
+    <button class="lang-opt" data-lang="uk">Українська</button>
+    <button class="lang-opt" data-lang="fa">فارسی</button>
+    <button class="lang-opt" data-lang="he">עברית</button>
+    <button class="lang-opt" data-lang="id">Bahasa Indonesia</button>
+    <button class="lang-opt" data-lang="vi">Tiếng Việt</button>
+    <button class="lang-opt" data-lang="el">Ελληνικά</button>
+    <button class="lang-opt" data-lang="cs">Čeština</button>
+    <button class="lang-opt" data-lang="ro">Română</button>
+    <button class="lang-opt" data-lang="hu">Magyar</button>
+    <button class="lang-opt" data-lang="da">Dansk</button>
+    <button class="lang-opt" data-lang="fi">Suomi</button>
+    <button class="lang-opt" data-lang="no">Norsk</button>
+    <button class="lang-opt" data-lang="sk">Slovenčina</button>
+    <button class="lang-opt" data-lang="bg">Български</button>
+    <button class="lang-opt" data-lang="hr">Hrvatski</button>
+    <button class="lang-opt" data-lang="sr">Српски</button>
+    <button class="lang-opt" data-lang="ms">Bahasa Melayu</button>
+    <button class="lang-opt" data-lang="et">Eesti</button>
+    <button class="lang-opt" data-lang="lv">Latviešu</button>
+    <button class="lang-opt" data-lang="lt">Lietuvių</button>
+    <button class="lang-opt" data-lang="sl">Slovenščina</button>
+    <button class="lang-opt" data-lang="mt">Malti</button>
+    <button class="lang-opt" data-lang="ga">Gaeilge</button>
+    <button class="lang-opt" data-lang="sq">Shqip</button>
+    <button class="lang-opt" data-lang="mk">Македонски</button>
+    <button class="lang-opt" data-lang="is">Íslenska</button>
+    <button class="lang-opt" data-lang="af">Afrikaans</button>
+    <button class="lang-opt" data-lang="sw">Kiswahili</button>
+    <button class="lang-opt" data-lang="zu">isiZulu</button>
+    <button class="lang-opt" data-lang="xh">isiXhosa</button>
+    <button class="lang-opt" data-lang="st">Sesotho</button>
+    <button class="lang-opt" data-lang="tn">Setswana</button>
+    <button class="lang-opt" data-lang="ts">Xitsonga</button>
+    <button class="lang-opt" data-lang="ss">siSwati</button>
+    <button class="lang-opt" data-lang="ve">Tshivenda</button>
+    <button class="lang-opt" data-lang="nr">isiNdebele</button>
+    <button class="lang-opt" data-lang="yo">Yorùbá</button>
+    <button class="lang-opt" data-lang="ig">Igbo</button>
+    <button class="lang-opt" data-lang="ha">Hausa</button>
+    <button class="lang-opt" data-lang="am">አማርኛ</button>
+    <button class="lang-opt" data-lang="so">Soomaali</button>
+    <button class="lang-opt" data-lang="rw">Kinyarwanda</button>
+    <button class="lang-opt" data-lang="mg">Malagasy</button>
+    <button class="lang-opt" data-lang="my">မြန်မာ</button>
+    <button class="lang-opt" data-lang="km">ខ្មែរ</button>
+    <button class="lang-opt" data-lang="lo">ລາວ</button>
+    <button class="lang-opt" data-lang="si">සිංහල</button>
+    <button class="lang-opt" data-lang="ta">தமிழ்</button>
+    <button class="lang-opt" data-lang="te">తెలుగు</button>
+    <button class="lang-opt" data-lang="ml">മലയാളം</button>
+    <button class="lang-opt" data-lang="kn">ಕನ್ನಡ</button>
+    <button class="lang-opt" data-lang="mr">मराठी</button>
+    <button class="lang-opt" data-lang="gu">ગુજરાતી</button>
+    <button class="lang-opt" data-lang="pa">ਪੰਜਾਬੀ</button>
+    <button class="lang-opt" data-lang="bn">বাংলা</button>
+    <button class="lang-opt" data-lang="ur">اردو</button>
+    <button class="lang-opt" data-lang="ne">नेपाली</button>
+    <button class="lang-opt" data-lang="si">සිංහල</button>
+    <button class="lang-opt" data-lang="th">ไทย</button>
+    <button class="lang-opt" data-lang="jv">Basa Jawa</button>
+    <button class="lang-opt" data-lang="su">Basa Sunda</button>
+    <button class="lang-opt" data-lang="fil">Filipino</button>
+    <button class="lang-opt" data-lang="ceb">Cebuano</button>
+    <button class="lang-opt" data-lang="tl">Tagalog</button>
+    <button class="lang-opt" data-lang="mn">Монгол</button>
+    <button class="lang-opt" data-lang="kk">Қазақша</button>
+    <button class="lang-opt" data-lang="uz">Oʻzbekcha</button>
+    <button class="lang-opt" data-lang="ky">Кыргызча</button>
+    <button class="lang-opt" data-lang="tg">Тоҷикӣ</button>
+    <button class="lang-opt" data-lang="tk">Türkmençe</button>
+    <button class="lang-opt" data-lang="az">Azərbaycanca</button>
+    <button class="lang-opt" data-lang="ka">ქართული</button>
+    <button class="lang-opt" data-lang="hy">Հայերեն</button>
+    <button class="lang-opt" data-lang="be">Беларуская</button>
+    <button class="lang-opt" data-lang="uk">Українська</button>
+    <button class="lang-opt" data-lang="mo">Moldovenească</button>
+    <button class="lang-opt" data-lang="bs">Bosanski</button>
+    <button class="lang-opt" data-lang="sq">Shqip</button>
+    <button class="lang-opt" data-lang="mk">Македонски</button>
+    <button class="lang-opt" data-lang="is">Íslenska</button>
+    <button class="lang-opt" data-lang="af">Afrikaans</button>
+    <button class="lang-opt" data-lang="sw">Kiswahili</button>
+    <button class="lang-opt" data-lang="zu">isiZulu</button>
+    <button class="lang-opt" data-lang="xh">isiXhosa</button>
+    <button class="lang-opt" data-lang="st">Sesotho</button>
+    <button class="lang-opt" data-lang="tn">Setswana</button>
+    <button class="lang-opt" data-lang="ts">Xitsonga</button>
+    <button class="lang-opt" data-lang="ss">siSwati</button>
+    <button class="lang-opt" data-lang="ve">Tshivenda</button>
+    <button class="lang-opt" data-lang="nr">isiNdebele</button>
+    <button class="lang-opt" data-lang="yo">Yorùbá</button>
+    <button class="lang-opt" data-lang="ig">Igbo</button>
+    <button class="lang-opt" data-lang="ha">Hausa</button>
+    <button class="lang-opt" data-lang="am">አማርኛ</button>
+    <button class="lang-opt" data-lang="so">Soomaali</button>
+    <button class="lang-opt" data-lang="rw">Kinyarwanda</button>
+    <button class="lang-opt" data-lang="mg">Malagasy</button>
+    <button class="lang-opt" data-lang="my">မြန်မာ</button>
+    <button class="lang-opt" data-lang="km">ខ្មែរ</button>
+    <button class="lang-opt" data-lang="lo">ລາວ</button>
+    <button class="lang-opt" data-lang="si">සිංහල</button>
+    <button class="lang-opt" data-lang="ta">தமிழ்</button>
+    <button class="lang-opt" data-lang="te">తెలుగు</button>
+    <button class="lang-opt" data-lang="ml">മലയാളം</button>
+    <button class="lang-opt" data-lang="kn">ಕನ್ನಡ</button>
+    <button class="lang-opt" data-lang="mr">मराठी</button>
+    <button class="lang-opt" data-lang="gu">ગુજરાતી</button>
+    <button class="lang-opt" data-lang="pa">ਪੰਜਾਬੀ</button>
+    <button class="lang-opt" data-lang="bn">বাংলা</button>
+    <button class="lang-opt" data-lang="ur">اردو</button>
+    <button class="lang-opt" data-lang="ne">नेपाली</button>
+    <button class="lang-opt" data-lang="si">සිංහල</button>
+    <button class="lang-opt" data-lang="th">ไทย</button>
+    <button class="lang-opt" data-lang="jv">Basa Jawa</button>
+    <button class="lang-opt" data-lang="su">Basa Sunda</button>
+    <button class="lang-opt" data-lang="fil">Filipino</button>
+    <button class="lang-opt" data-lang="ceb">Cebuano</button>
+    <button class="lang-opt" data-lang="tl">Tagalog</button>
+    <button class="lang-opt" data-lang="mn">Монгол</button>
+    <button class="lang-opt" data-lang="kk">Қазақша</button>
+    <button class="lang-opt" data-lang="uz">Oʻzbekcha</button>
+    <button class="lang-opt" data-lang="ky">Кыргызча</button>
+    <button class="lang-opt" data-lang="tg">Тоҷикӣ</button>
+    <button class="lang-opt" data-lang="tk">Türkmençe</button>
+    <button class="lang-opt" data-lang="az">Azərbaycanca</button>
+    <button class="lang-opt" data-lang="ka">ქართული</button>
+    <button class="lang-opt" data-lang="hy">Հայերեն</button>
+    <button class="lang-opt" data-lang="be">Беларуская</button>
+    <button class="lang-opt" data-lang="uk">Українська</button>
+    <button class="lang-opt" data-lang="mo">Moldovenească</button>
+    <button class="lang-opt" data-lang="bs">Bosanski</button>
+    <button class="lang-opt" data-lang="sq">Shqip</button>
+    <button class="lang-opt" data-lang="mk">Македонски</button>
+    <button class="lang-opt" data-lang="is">Íslenska</button>
+    <button class="lang-opt" data-lang="af">Afrikaans</button>
+    <button class="lang-opt" data-lang="sw">Kiswahili</button>
+    <button class="lang-opt" data-lang="zu">isiZulu</button>
+    <button class="lang-opt" data-lang="xh">isiXhosa</button>
+    <button class="lang-opt" data-lang="st">Sesotho</button>
+    <button class="lang-opt" data-lang="tn">Setswana</button>
+    <button class="lang-opt" data-lang="ts">Xitsonga</button>
+    <button class="lang-opt" data-lang="ss">siSwati</button>
+    <button class="lang-opt" data-lang="ve">Tshivenda</button>
+    <button class="lang-opt" data-lang="nr">isiNdebele</button>
+    <button class="lang-opt" data-lang="yo">Yorùbá</button>
+    <button class="lang-opt" data-lang="ig">Igbo</button>
+    <button class="lang-opt" data-lang="ha">Hausa</button>
+    <button class="lang-opt" data-lang="am">አማርኛ</button>
+    <button class="lang-opt" data-lang="so">Soomaali</button>
+    <button class="lang-opt" data-lang="rw">Kinyarwanda</button>
+    <button class="lang-opt" data-lang="mg">Malagasy</button>
+    <button class="lang-opt" data-lang="my">မြန်မာ</button>
+    <button class="lang-opt" data-lang="km">ខ្មែរ</button>
+    <button class="lang-opt" data-lang="lo">ລາວ</button>
+    <button class="lang-opt" data-lang="si">සිංහල</button>
+    <button class="lang-opt" data-lang="ta">தமிழ்</button>
+    <button class="lang-opt" data-lang="te">తెలుగు</button>
+    <button class="lang-opt" data-lang="ml">മലയാളം</button>
+    <button class="lang-opt" data-lang="kn">ಕನ್ನಡ</button>
+    <button class="lang-opt" data-lang="mr">मराठी</button>
+    <button class="lang-opt" data-lang="gu">ગુજરાતી</button>
+    <button class="lang-opt" data-lang="pa">ਪੰਜਾਬੀ</button>
+    <button class="lang-opt" data-lang="bn">বাংলা</button>
+    <button class="lang-opt" data-lang="ur">اردو</button>
+    <button class="lang-opt" data-lang="ne">नेपाली</button>
+    <button class="lang-opt" data-lang="si">සිංහල</button>
+    <button class="lang-opt" data-lang="th">ไทย</button>
+    <button class="lang-opt" data-lang="jv">Basa Jawa</button>
+    <button class="lang-opt" data-lang="su">Basa Sunda</button>
+    <button class="lang-opt" data-lang="fil">Filipino</button>
+    <button class="lang-opt" data-lang="ceb">Cebuano</button>
+    <button class="lang-opt" data-lang="tl">Tagalog</button>
+    <button class="lang-opt" data-lang="mn">Монгол</button>
+    <button class="lang-opt" data-lang="kk">Қазақша</button>
+    <button class="lang-opt" data-lang="uz">Oʻzbekcha</button>
+    <button class="lang-opt" data-lang="ky">Кыргызча</button>
+    <button class="lang-opt" data-lang="tg">Тоҷикӣ</button>
+    <button class="lang-opt" data-lang="tk">Türkmençe</button>
+    <button class="lang-opt" data-lang="az">Azərbaycanca</button>
+    <button class="lang-opt" data-lang="ka">ქართული</button>
+    <button class="lang-opt" data-lang="hy">Հայերեն</button>
+    <button class="lang-opt" data-lang="be">Беларуская</button>
+    <button class="lang-opt" data-lang="uk">Українська</button>
+    <button class="lang-opt" data-lang="mo">Moldovenească</button>
+    <button class="lang-opt" data-lang="bs">Bosanski</button>
+  </div>
+</div>
+
 <!-- PWA Install — always shown, prompts native install on supported browsers -->
 <button id="installBtn" title="Add to Home Screen">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -772,6 +983,66 @@ if ('serviceWorker' in navigator) {
       .catch(e => console.log('[PWA] SW error', e));
   });
 }
+</script>
+<!-- Google Translate API loader -->
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script>
+// Custom translation menu logic
+const translateBtn = document.getElementById('translateBtn');
+const langMenu = document.getElementById('langMenu');
+let menuOpen = false;
+translateBtn.onclick = () => {
+  menuOpen = !menuOpen;
+  langMenu.style.display = menuOpen ? 'block' : 'none';
+};
+document.addEventListener('click', e => {
+  if (!translateBtn.contains(e.target) && !langMenu.contains(e.target)) {
+    langMenu.style.display = 'none';
+    menuOpen = false;
+  }
+});
+
+// Google Translate widget hidden, but used for API
+window.googleTranslateElementInit = function() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    autoDisplay: false
+  }, 'hidden_translate_element');
+};
+
+// Add a hidden widget for API
+const hiddenDiv = document.createElement('div');
+hiddenDiv.id = 'hidden_translate_element';
+hiddenDiv.style.display = 'none';
+document.body.appendChild(hiddenDiv);
+
+// Language switching
+document.querySelectorAll('.lang-opt').forEach(btn => {
+  btn.onclick = function() {
+    const lang = btn.getAttribute('data-lang');
+    function setLang() {
+      const select = document.querySelector('select.goog-te-combo');
+      if (select) {
+        select.value = lang;
+        select.dispatchEvent(new Event('change'));
+        langMenu.style.display = 'none';
+        menuOpen = false;
+        return true;
+      }
+      return false;
+    }
+    // Try immediately, or after a short delay if widget not ready
+    if (!setLang()) {
+      setTimeout(() => {
+        if (!setLang()) {
+          // Fallback: reload with hash for Google Translate
+          window.location.hash = `googtrans(en|${lang})`;
+          window.location.reload();
+        }
+      }, 400);
+    }
+  };
+});
 </script>
 </body>
 </html>
