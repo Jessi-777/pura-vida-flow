@@ -2,7 +2,7 @@
   "name": "Pura Vida Flow — Ambient Soundscape",
   "short_name": "Pura Vida Flow",
   "description": "A calming ambient soundscape with river, piano, wooden chimes, birdsong, rain, ocean and more.",
-  "start_url": "./pura-vida-flow.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#1a2620",
