@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#2c3e35">
+<meta name="description" content="Pura Vida Flow — a calming ambient soundscape with river, piano, wind chimes, birdsong and guitar.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Pura Vida Flow">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.svg">
+<title>Pura Vida Flow — Ambient Soundscape</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Jost:wght@200;300;400&display=swap');
+
+:root {
+  --sage: #7a9e7e;
+  --moss: #4a7c59;
+  --mist: #c8ddd1;
+  --stone: #2c3e35;
+  --sky: #a8c5d4;
+  --gold: #c9a84c;
+  --cream: #f5f0e8;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Jost', sans-serif;
+  background: #1a2620;
+  color: var(--cream);
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Background */
+.bg-layer {
+  position: fixed; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse at 20% 80%, #1a2e25 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, #1e3040 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 50%, #2c3e35 0%, #1a2620 100%);
+}
+.noise {
+  position: fixed; inset: 0; z-index: 1; opacity: 0.04; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 256px;
+}
+
+/* Orbs */
+.orb {
+  position: fixed; border-radius: 50%; filter: blur(80px); z-index: 1;
+  animation: drift linear infinite; opacity: 0;
+  transition: opacity 2s ease; pointer-events: none;
+}
+.orb.visible { opacity: 1; }
+.orb-1 { width:400px; height:400px; background:radial-gradient(circle,rgba(122,158,126,0.18),transparent); top:-100px; left:-100px; animation-duration:22s; }
+.orb-2 { width:300px; height:300px; background:radial-gradient(circle,rgba(168,197,212,0.12),transparent); bottom:-50px; right:-80px; animation-duration:18s; animation-direction:reverse; }
+.orb-3 { width:250px; height:250px; background:radial-gradient(circle,rgba(201,168,76,0.08),transparent); top:40%; left:60%; animation-duration:25s; }
+@keyframes drift {
+  0%   { transform: translate(0,0) scale(1); }
+  33%  { transform: translate(30px,-20px) scale(1.05); }
+  66%  { transform: translate(-20px,15px) scale(0.95); }
+  100% { transform: translate(0,0) scale(1); }
+}
+
+/* Particles */
+.particles { position:fixed; inset:0; z-index:2; pointer-events:none; }
+.particle {
+  position:absolute; border-radius:50%; background:rgba(122,158,126,0.6);
+  animation: float-up linear forwards;
+}
+@keyframes float-up {
+  0%   { transform:translateY(0) scale(1); opacity:0.6; }
+  100% { transform:translateY(-120px) scale(0); opacity:0; }
+}
+
+/* Leaves */
+.leaf-deco {
+  position:fixed; z-index:2; pointer-events:none;
+  font-size:13px; opacity:0.08; animation:leaf-drift linear forwards;
+}
+@keyframes leaf-drift {
+  0%   { transform:translateY(-20px) rotate(0deg); opacity:0; }
+  10%  { opacity:0.08; }
+  90%  { opacity:0.08; }
+  100% { transform:translateY(110vh) rotate(360deg); opacity:0; }
+}
+
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(18px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* Main */
+.container {
+  position:relative; z-index:10;
+  text-align:center;
+  display:flex; flex-direction:column; align-items:center; gap:0;
+}
+
+.brand-tag {
+  font-weight:200; font-size:10px; letter-spacing:0.35em;
+  color:var(--sage); text-transform:uppercase; margin-bottom:20px;
+  opacity:0; animation:fadeUp 1.2s ease forwards 0.3s;
+}
+
+h1 {
+  font-family:'Cormorant Garamond',serif; font-weight:300;
+  font-size:clamp(42px,7vw,80px); line-height:0.95;
+  color:var(--cream); margin-bottom:8px;
+  opacity:0; animation:fadeUp 1.2s ease forwards 0.5s;
+}
+h1 em { font-style:italic; color:var(--mist); }
+
+.subtitle {
+  font-weight:200; font-size:12px; letter-spacing:0.2em;
+  color:rgba(200,221,209,0.5); text-transform:uppercase; margin-bottom:52px;
+  opacity:0; animation:fadeUp 1.2s ease forwards 0.7s;
+}
+
+/* Visualizer */
+.visualizer-wrap {
+  position:relative; width:280px; height:280px; margin-bottom:44px;
+  opacity:0; animation:fadeUp 1.2s ease forwards 0.9s;
+}
+.visualizer-ring {
+  position:absolute; inset:0; border-radius:50%;
+  border:1px solid rgba(122,158,126,0.15);
+  animation:pulse-ring 4s ease-in-out infinite;
+}
+.ring-2 { inset:18px; border-color:rgba(122,158,126,0.1); animation-delay:0.5s; animation-duration:5s; }
+.ring-3 { inset:36px; border-color:rgba(168,197,212,0.08); animation-delay:1s; animation-duration:6s; }
+@keyframes pulse-ring {
+  0%,100% { transform:scale(1); opacity:0.6; }
+  50%      { transform:scale(1.03); opacity:1; }
+}
+
+.play-btn {
+  position:absolute; inset:0; margin:auto;
+  width:148px; height:148px; background:none;
+  border:1.5px solid rgba(200,221,209,0.25); border-radius:50%;
+  cursor:pointer; display:flex; align-items:center; justify-content:center;
+  transition:all 0.4s ease; outline:none;
+}
+.play-btn::before {
+  content:''; position:absolute; inset:-1px; border-radius:50%;
+  background:radial-gradient(circle at 40% 35%,rgba(122,158,126,0.12),transparent 65%);
+}
+.play-btn:hover { border-color:rgba(200,221,209,0.5); transform:scale(1.03); }
+.play-btn.active {
+  border-color:rgba(122,158,126,0.6);
+  box-shadow:0 0 40px rgba(122,158,126,0.15), inset 0 0 30px rgba(122,158,126,0.05);
+}
+.icon-play {
+  width:0; height:0; border-style:solid;
+  border-width:14px 0 14px 24px;
+  border-color:transparent transparent transparent var(--mist);
+  margin-left:6px;
+}
+.icon-pause { display:none; gap:7px; }
+.icon-pause span { display:block; width:5px; height:26px; background:var(--mist); border-radius:3px; }
+.play-btn.active .icon-play  { display:none; }
+.play-btn.active .icon-pause { display:flex; }
+
+/* Waveform bars */
+.waveform {
+  position:absolute; bottom:10px; left:50%; transform:translateX(-50%);
+  display:flex; align-items:flex-end; gap:3px; height:30px;
+}
+.wbar {
+  width:3px;
+  background:linear-gradient(to top, var(--sage), rgba(122,158,126,0.3));
+  border-radius:2px; height:4px; transition:height 0.1s ease; opacity:0.6;
+}
+
+/* Controls */
+.controls {
+  display:flex; flex-direction:column; align-items:center; gap:24px;
+  opacity:0; animation:fadeUp 1.2s ease forwards 1.1s;
+}
+
+.layers { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; max-width:380px; }
+
+.layer-btn {
+  font-family:'Jost',sans-serif; font-weight:300; font-size:10px;
+  letter-spacing:0.18em; text-transform:uppercase;
+  padding:8px 16px; border-radius:40px;
+  border:1px solid rgba(200,221,209,0.18);
+  background:rgba(200,221,209,0.04); color:rgba(200,221,209,0.5);
+  cursor:pointer; transition:all 0.3s ease; outline:none;
+}
+.layer-btn:hover { border-color:rgba(122,158,126,0.5); color:var(--mist); background:rgba(122,158,126,0.08); }
+.layer-btn.on  { border-color:var(--sage); color:var(--sage); background:rgba(122,158,126,0.12); }
+
+/* Sliders */
+.sliders { display:flex; gap:32px; align-items:flex-start; }
+.slider-group { display:flex; flex-direction:column; align-items:center; gap:10px; }
+.slider-label { font-size:9px; letter-spacing:0.25em; text-transform:uppercase; color:rgba(200,221,209,0.35); font-weight:300; }
+input[type=range] {
+  -webkit-appearance:none; width:110px; height:2px;
+  background:rgba(200,221,209,0.12); border-radius:2px; outline:none; cursor:pointer;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance:none; width:14px; height:14px; background:var(--mist);
+  border-radius:50%; border:2px solid #1a2620; box-shadow:0 0 6px rgba(122,158,126,0.4);
+}
+
+/* Status & Timer */
+.status {
+  font-size:10px; letter-spacing:0.2em; text-transform:uppercase;
+  color:rgba(200,221,209,0.25); margin-top:10px; font-weight:200;
+  min-height:16px; transition:color 0.5s ease;
+}
+.status.live { color:var(--sage); }
+.timer {
+  font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:300;
+  color:rgba(200,221,209,0.3); letter-spacing:0.05em; margin-top:4px;
+}
+
+/* PWA Install — always visible, bottom center */
+#installBtn {
+  position:fixed; bottom:52px; left:50%; transform:translateX(-50%);
+  z-index:50;
+  display:flex; align-items:center; gap:8px;
+  font-family:'Jost',sans-serif; font-weight:300; font-size:10px;
+  letter-spacing:0.2em; text-transform:uppercase;
+  padding:11px 24px; border-radius:40px;
+  border:1px solid rgba(122,158,126,0.5);
+  background:rgba(26,38,32,0.88);
+  color:var(--sage); cursor:pointer;
+  backdrop-filter:blur(12px);
+  transition:all 0.3s ease; white-space:nowrap;
+  animation:pulse-install 3s ease-in-out infinite;
+}
+#installBtn:hover { border-color:var(--sage); background:rgba(122,158,126,0.18); color:var(--mist); transform:translateX(-50%) scale(1.03); }
+#installBtn svg { width:14px; height:14px; }
+#installBtn.hidden { display:none; }
+@keyframes pulse-install {
+  0%,100% { box-shadow:0 0 0 0 rgba(122,158,126,0.35); }
+  50%      { box-shadow:0 0 0 8px rgba(122,158,126,0); }
+}
+
+/* Signature */
+.signature {
+  position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
+  z-index:10; font-size:9px; letter-spacing:0.3em; text-transform:uppercase;
+  color:rgba(200,221,209,0.15); font-weight:200; white-space:nowrap;
+}
+</style>
+</head>
+<body>
+
+<div class="bg-layer"></div>
+<div class="noise"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+<div class="particles" id="particles"></div>
+
+<div class="container">
+  <div class="brand-tag">Eco Soundscape · Ambient Series</div>
+  <h1>Pura Vida <em>Flow</em></h1>
+  <div class="subtitle">River · Piano · Wooden Chimes · Forest</div>
+
+  <div class="visualizer-wrap">
+    <div class="visualizer-ring"></div>
+    <div class="visualizer-ring ring-2"></div>
+    <div class="visualizer-ring ring-3"></div>
+    <button class="play-btn" id="playBtn" title="Play / Pause">
+      <div class="icon-play"></div>
+      <div class="icon-pause"><span></span><span></span></div>
+    </button>
+    <div class="waveform" id="waveform"></div>
+  </div>
+
+  <div class="controls">
+    <div class="layers">
+      <button class="layer-btn on" data-layer="river">🌊 River</button>
+      <button class="layer-btn on" data-layer="piano">🎹 Piano</button>
+      <button class="layer-btn on" data-layer="guitar">🎸 Guitar</button>
+      <button class="layer-btn on" data-layer="chimes">🪵 Chimes</button>
+      <button class="layer-btn on" data-layer="birds">🐦 Birds</button>
+      <button class="layer-btn on" data-layer="wind">🍃 Wind</button>
+    </div>
+
+    <div class="sliders">
+      <div class="slider-group">
+        <div class="slider-label">Volume</div>
+        <input type="range" id="volSlider" min="0" max="100" value="80">
+      </div>
+      <div class="slider-group">
+        <div class="slider-label">Reverb</div>
+        <input type="range" id="reverbSlider" min="0" max="100" value="60">
+      </div>
+    </div>
+
+    <div class="timer" id="timer">0:00</div>
+    <div class="status" id="status">Click play to begin</div>
+  </div>
+</div>
+
+<!-- PWA Install — always shown, prompts native install on supported browsers -->
+<button id="installBtn" title="Add to Home Screen">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3v13m0 0l-4-4m4 4l4-4M3 18v1a2 2 0 002 2h14a2 2 0 002-2v-1"/>
+  </svg>
+  Add to Home Screen
+</button>
+
+<div class="signature">Pura Vida Flow — Ambient Soundscape</div>
+
+<script>
+/* ══════════════════════════════════════════════
+   PURA VIDA FLOW — Audio Engine
+   All 6 layers with working toggle on/off
+══════════════════════════════════════════════ */
+
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+let ctx = null, masterGain = null, reverbNode = null, reverbGain = null, dryGain = null;
+let isPlaying = false, elapsed = 0, timerInterval = null;
+let waveAnalyser = null, waveAnimFrame = null;
+
+const layerStates = { river:true, piano:true, guitar:true, chimes:true, birds:true, wind:true };
+const layerGains  = {};
+let A = {}; // active sources & timeouts
+
+/* ── REVERB ── */
+function makeReverb(duration, decay) {
+  const rate = ctx.sampleRate;
+  const len  = Math.floor(rate * duration);
+  const buf  = ctx.createBuffer(2, len, rate);
+  for (let c = 0; c < 2; c++) {
+    const d = buf.getChannelData(c);
+    for (let i = 0; i < len; i++)
+      d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay) * (i < rate * 0.08 ? 1.2 : 1);
+  }
+  const n = ctx.createConvolver(); n.buffer = buf; return n;
+}
+
+/* ── SETUP ── */
+function setupAudio() {
+  ctx = new AudioCtx();
+  masterGain = ctx.createGain(); masterGain.gain.value = 0;
+
+  waveAnalyser = ctx.createAnalyser();
+  waveAnalyser.fftSize = 64;
+
+  reverbNode = makeReverb(5.5, 1.8);
+  reverbGain = ctx.createGain(); reverbGain.gain.value = 0.55;
+  dryGain    = ctx.createGain(); dryGain.gain.value    = 0.70;
+
+  masterGain.connect(dryGain);
+  masterGain.connect(reverbNode);
+  reverbNode.connect(reverbGain);
+  dryGain.connect(waveAnalyser);
+  reverbGain.connect(waveAnalyser);
+  waveAnalyser.connect(ctx.destination);
+
+  ['river','piano','guitar','chimes','birds','wind'].forEach(id => {
+    layerGains[id] = ctx.createGain();
+    layerGains[id].gain.value = 1;
+    layerGains[id].connect(masterGain);
+  });
+
+  // Chimes get a lush extra reverb
+  const cr = makeReverb(7, 1.3);
+  const crG = ctx.createGain(); crG.gain.value = 0.65;
+  layerGains['chimes'].connect(cr); cr.connect(crG); crG.connect(waveAnalyser);
+}
+
+/* ════════════ RIVER ════════════ */
+function startRiver() {
+  const sz = ctx.sampleRate * 4;
+  const buf = ctx.createBuffer(2, sz, ctx.sampleRate);
+  for (let c = 0; c < 2; c++) {
+    const d = buf.getChannelData(c);
+    let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0;
+    for (let i = 0; i < sz; i++) {
+      const w = Math.random()*2-1;
+      b0=0.99886*b0+w*0.0555179; b1=0.99332*b1+w*0.0750759;
+      b2=0.96900*b2+w*0.1538520; b3=0.86650*b3+w*0.3104856;
+      b4=0.55000*b4+w*0.5329522; b5=-0.7616*b5-w*0.0168980;
+      d[i] = (b0+b1+b2+b3+b4+b5+w*0.5362) * 0.038;
+    }
+  }
+  const src = ctx.createBufferSource(); src.buffer = buf; src.loop = true;
+  const lpf = ctx.createBiquadFilter(); lpf.type='lowpass'; lpf.frequency.value=950; lpf.Q.value=0.5;
+  const hpf = ctx.createBiquadFilter(); hpf.type='highpass'; hpf.frequency.value=200; hpf.Q.value=0.3;
+  const mod = ctx.createOscillator(); const modG = ctx.createGain();
+  mod.frequency.value=0.07; modG.gain.value=200;
+  mod.connect(modG); modG.connect(lpf.frequency); mod.start();
+  src.connect(hpf); hpf.connect(lpf); lpf.connect(layerGains['river']); src.start();
+  A.river = [src, mod];
+}
+
+/* ════════════ WIND ════════════ */
+function startWind() {
+  const sz = ctx.sampleRate * 5;
+  const buf = ctx.createBuffer(1, sz, ctx.sampleRate);
+  const d = buf.getChannelData(0);
+  for (let i = 0; i < sz; i++) d[i] = (Math.random()*2-1) * 0.12;
+  const src = ctx.createBufferSource(); src.buffer=buf; src.loop=true;
+  const bpf = ctx.createBiquadFilter(); bpf.type='bandpass'; bpf.frequency.value=380; bpf.Q.value=0.28;
+  const env = ctx.createGain();
+  function swell() {
+    if (!isPlaying) return;
+    const t = ctx.currentTime;
+    env.gain.setValueAtTime(0.015, t);
+    env.gain.linearRampToValueAtTime(0.2,  t + 3 + Math.random()*2.5);
+    env.gain.linearRampToValueAtTime(0.015,t + 7 + Math.random()*4);
+    setTimeout(swell, (8 + Math.random()*5)*1000);
+  }
+  swell();
+  src.connect(bpf); bpf.connect(env); env.connect(layerGains['wind']); src.start();
+  A.wind = [src];
+}
+
+/* ════════════ PIANO ════════════ */
+function schedNote(freq, st, dur, vol) {
+  [1,2,3,4].forEach((h, i) => {
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = 'sine'; o.frequency.value = freq * h;
+    const p = vol * [1.0, 0.5, 0.25, 0.1][i];
+    g.gain.setValueAtTime(0, st);
+    g.gain.linearRampToValueAtTime(p, st+0.015);
+    g.gain.exponentialRampToValueAtTime(p*0.7, st+0.1);
+    g.gain.exponentialRampToValueAtTime(p*0.4, st+0.8);
+    g.gain.exponentialRampToValueAtTime(0.0001, st+dur);
+    o.connect(g); g.connect(layerGains['piano']);
+    o.start(st); o.stop(st+dur+0.05);
+  });
+}
+
+const pianoScale = [349.23,392.00,440.00,523.25,587.33,698.46,784.00,880.00];
+const chordProg  = [[349.23,440.00,523.25],[392.00,493.88,587.33],[440.00,523.25,659.25],[392.00,466.16,587.33]];
+
+function schedulePiano() {
+  if (!isPlaying || !layerStates.piano) return;
+  const t = ctx.currentTime + 0.05;
+  const phrase = [0,2,4,7,6,4,2,0];
+  let lastDelay = 0;
+  phrase.forEach((idx, i) => {
+    const dl = i * (1.1 + Math.random()*0.3);
+    schedNote(pianoScale[idx], t+dl, 2.2+Math.random(), 0.36);
+    lastDelay = dl;
+  });
+  A.pianoTimeout = setTimeout(schedulePiano, (lastDelay + 2 + Math.random()*3) * 1000);
+}
+
+function scheduleChord() {
+  if (!isPlaying || !layerStates.piano) return;
+  const ch = chordProg[Math.floor(Math.random() * chordProg.length)];
+  const t  = ctx.currentTime + 0.05;
+  ch.forEach((f, i) => schedNote(f*0.5, t+i*0.06, 4.5+Math.random()*2, 0.15));
+  A.chordTimeout = setTimeout(scheduleChord, (8 + Math.random()*6) * 1000);
+}
+
+/* ════════════ GUITAR ════════════ */
+function scheduleGuitar() {
+  if (!isPlaying || !layerStates.guitar) return;
+  const t = ctx.currentTime + 0.05;
+  const frets  = [196.00, 246.94, 293.66, 349.23, 392.00, 493.88];
+  const pattern = [0, 2, 4, 3, 2, 4, 1, 3];
+
+  pattern.forEach((idx, i) => {
+    const freq = frets[idx % frets.length];
+    const st   = t + i * (0.28 + Math.random()*0.06);
+
+    const o1 = ctx.createOscillator(), g1 = ctx.createGain();
+    o1.type = 'triangle'; o1.frequency.value = freq;
+    g1.gain.setValueAtTime(0, st);
+    g1.gain.linearRampToValueAtTime(0.42, st+0.008);
+    g1.gain.exponentialRampToValueAtTime(0.18, st+0.1);
+    g1.gain.exponentialRampToValueAtTime(0.0001, st+2.0);
+
+    const o2 = ctx.createOscillator(), g2 = ctx.createGain();
+    o2.type = 'sine'; o2.frequency.value = freq * 2;
+    g2.gain.setValueAtTime(0, st);
+    g2.gain.linearRampToValueAtTime(0.18, st+0.008);
+    g2.gain.exponentialRampToValueAtTime(0.0001, st+1.2);
+
+    const lp1 = ctx.createBiquadFilter(); lp1.type='lowpass'; lp1.frequency.value=2800; lp1.Q.value=0.6;
+    const lp2 = ctx.createBiquadFilter(); lp2.type='lowpass'; lp2.frequency.value=3200; lp2.Q.value=0.4;
+
+    o1.connect(lp1); lp1.connect(g1); g1.connect(layerGains['guitar']);
+    o2.connect(lp2); lp2.connect(g2); g2.connect(layerGains['guitar']);
+    o1.start(st); o1.stop(st+2.2);
+    o2.start(st); o2.stop(st+1.5);
+  });
+
+  A.guitarTimeout = setTimeout(scheduleGuitar, (4 + Math.random()*5) * 1000);
+}
+
+/* ════════════ WOODEN CHIMES ════════════ */
+const chimeNotes  = [261.63,293.66,329.63,392.00,440.00,523.25,587.33,659.25,783.99];
+const woodPartials = [
+  [1.000, 1.00, 1.00],
+  [2.930, 0.45, 0.65],
+  [5.740, 0.18, 0.45],
+  [9.480, 0.07, 0.28],
+  [1.003, 0.30, 0.90],
+  [0.997, 0.25, 0.88],
+  [2.000, 0.12, 0.55],
+];
+
+function strikeChime(freq, t, vol) {
+  // Percussive knock
+  const nLen = Math.floor(ctx.sampleRate * 0.04);
+  const nBuf = ctx.createBuffer(1, nLen, ctx.sampleRate);
+  const nd   = nBuf.getChannelData(0);
+  for (let i = 0; i < nLen; i++) nd[i] = Math.random()*2-1;
+  const nSrc = ctx.createBufferSource(); nSrc.buffer = nBuf;
+  const nbpf = ctx.createBiquadFilter(); nbpf.type='bandpass'; nbpf.frequency.value=freq*1.8; nbpf.Q.value=3;
+  const nG   = ctx.createGain();
+  nG.gain.setValueAtTime(0, t);
+  nG.gain.linearRampToValueAtTime(vol*0.35, t+0.003);
+  nG.gain.exponentialRampToValueAtTime(0.0001, t+0.055);
+  nSrc.connect(nbpf); nbpf.connect(nG); nG.connect(layerGains['chimes']);
+  nSrc.start(t); nSrc.stop(t+0.06);
+
+  // Tonal wood resonance
+  woodPartials.forEach(([ratio, amp, dm]) => {
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = 'sine'; o.frequency.value = freq * ratio;
+    o.detune.value = (Math.random()-0.5) * 3;
+    const decay = (4.5 + Math.random()*2.5) * dm;
+    g.gain.setValueAtTime(0, t);
+    g.gain.linearRampToValueAtTime(vol*amp*0.85, t+0.018+ratio*0.003);
+    g.gain.linearRampToValueAtTime(vol*amp, t+0.045);
+    g.gain.exponentialRampToValueAtTime(vol*amp*0.65, t+0.3);
+    g.gain.exponentialRampToValueAtTime(0.0001, t+decay);
+    const wf = ctx.createBiquadFilter(); wf.type='lowpass'; wf.frequency.value=4000/(ratio*0.5+0.5); wf.Q.value=0.5;
+    o.connect(wf); wf.connect(g); g.connect(layerGains['chimes']);
+    o.start(t); o.stop(t+decay+0.1);
+  });
+}
+
+function scheduleChimes() {
+  if (!isPlaying || !layerStates.chimes) return;
+  const t = ctx.currentTime + 0.01;
+  const count = Math.random() < 0.28 ? (Math.random() < 0.5 ? 2 : 3) : 1;
+  for (let s = 0; s < count; s++) {
+    const freq = chimeNotes[Math.floor(Math.random() * chimeNotes.length)];
+    strikeChime(freq, t + s*(0.18+Math.random()*0.25), 0.18+Math.random()*0.14);
+  }
+  A.chimesTimeout = setTimeout(scheduleChimes, (2.5 + Math.random()*5.5) * 1000);
+}
+
+/* ════════════ BIRDS ════════════ */
+const birdPats = [
+  { freqs:[1800,2200,1900],        durs:[0.12,0.08,0.15],       gap:0.05 },
+  { freqs:[2400,2600,2400,2200],   durs:[0.10,0.07,0.10,0.20],  gap:0.04 },
+  { freqs:[1600,1800,2100],        durs:[0.08,0.06,0.18],        gap:0.03 },
+  { freqs:[2200,2400,2200,1900],   durs:[0.08,0.06,0.08,0.16],  gap:0.03 },
+];
+
+function scheduleBirds() {
+  if (!isPlaying || !layerStates.birds) return;
+  const p = birdPats[Math.floor(Math.random() * birdPats.length)];
+  const t = ctx.currentTime;
+  let off = 0;
+  p.freqs.forEach((bf, i) => {
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = 'sine';
+    const mod  = ctx.createOscillator(), modG = ctx.createGain();
+    mod.frequency.value  = 18 + Math.random()*8;
+    modG.gain.value      = 40 + Math.random()*20;
+    o.frequency.value    = bf * (0.97 + Math.random()*0.06);
+    mod.connect(modG); modG.connect(o.frequency);
+    const st = t + off;
+    g.gain.setValueAtTime(0, st);
+    g.gain.linearRampToValueAtTime(0.09, st+0.01);
+    g.gain.linearRampToValueAtTime(0.06, st+p.durs[i]-0.01);
+    g.gain.linearRampToValueAtTime(0, st+p.durs[i]);
+    o.connect(g); g.connect(layerGains['birds']);
+    mod.start(st); o.start(st);
+    o.stop(st+p.durs[i]+0.02); mod.stop(st+p.durs[i]+0.02);
+    off += p.durs[i] + p.gap;
+  });
+  A.birdsTimeout = setTimeout(scheduleBirds, (4 + Math.random()*12) * 1000);
+}
+
+/* ════════════ START / STOP ════════════ */
+function startAll() {
+  startRiver();
+  startWind();
+  schedulePiano();
+  scheduleChord();
+  scheduleGuitar();
+  scheduleChimes();
+  scheduleBirds();
+}
+
+function stopAll() {
+  ['pianoTimeout','chordTimeout','guitarTimeout','chimesTimeout','birdsTimeout'].forEach(k => {
+    if (A[k]) clearTimeout(A[k]);
+  });
+  ['river','wind'].forEach(k => {
+    if (A[k]) A[k].forEach(s => { try { s.stop(); } catch(e) {} });
+  });
+  A = {};
+}
+
+function fadeIn() {
+  const vol = parseFloat(document.getElementById('volSlider').value) / 100;
+  masterGain.gain.cancelScheduledValues(ctx.currentTime);
+  masterGain.gain.setValueAtTime(0, ctx.currentTime);
+  masterGain.gain.linearRampToValueAtTime(vol, ctx.currentTime + 2.5);
+}
+
+function fadeOut(cb) {
+  masterGain.gain.cancelScheduledValues(ctx.currentTime);
+  masterGain.gain.setValueAtTime(masterGain.gain.value, ctx.currentTime);
+  masterGain.gain.linearRampToValueAtTime(0, ctx.currentTime + 1.5);
+  setTimeout(cb, 1600);
+}
+
+/* ════════════ WAVEFORM ════════════ */
+const wfEl = document.getElementById('waveform');
+for (let i = 0; i < 18; i++) {
+  const b = document.createElement('div'); b.className='wbar'; wfEl.appendChild(b);
+}
+
+function animateWave() {
+  if (!waveAnalyser) return;
+  const data = new Uint8Array(waveAnalyser.frequencyBinCount);
+  waveAnalyser.getByteFrequencyData(data);
+  wfEl.querySelectorAll('.wbar').forEach((b, i) => {
+    const val = (data[i*2] || 0) / 255;
+    b.style.height  = (isPlaying ? 4 + val*28 : 4) + 'px';
+    b.style.opacity = isPlaying ? 0.3 + val*0.7 : 0.25;
+  });
+  waveAnimFrame = requestAnimationFrame(animateWave);
+}
+
+/* ════════════ TIMER ════════════ */
+function fmt(s) { return `${Math.floor(s/60)}:${(s%60).toString().padStart(2,'0')}`; }
+
+/* ════════════ PLAY BUTTON ════════════ */
+const playBtn  = document.getElementById('playBtn');
+const statusEl = document.getElementById('status');
+const timerEl  = document.getElementById('timer');
+
+playBtn.addEventListener('click', async () => {
+  if (!ctx) setupAudio();
+  if (ctx.state === 'suspended') await ctx.resume();
+
+  if (!isPlaying) {
+    isPlaying = true;
+    playBtn.classList.add('active');
+    statusEl.textContent = 'Flowing…'; statusEl.classList.add('live');
+    document.querySelectorAll('.orb').forEach(o => o.classList.add('visible'));
+    startAll(); fadeIn(); animateWave();
+    timerInterval = setInterval(() => { elapsed++; timerEl.textContent = fmt(elapsed); }, 1000);
+    spawnParticles();
+  } else {
+    isPlaying = false;
+    playBtn.classList.remove('active');
+    statusEl.textContent = 'Pausing…'; statusEl.classList.remove('live');
+    document.querySelectorAll('.orb').forEach(o => o.classList.remove('visible'));
+    cancelAnimationFrame(waveAnimFrame);
+    clearInterval(timerInterval);
+    fadeOut(() => {
+      stopAll();
+      if (ctx) { ctx.close(); ctx = null; }
+      statusEl.textContent = 'Paused — click to resume';
+    });
+  }
+});
+
+/* ════════════ LAYER TOGGLES ════════════
+   When turning OFF: mute gain, scheduler exits on next tick.
+   When turning ON:  restore gain AND restart the scheduler.
+════════════════════════════════════════ */
+document.querySelectorAll('.layer-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (!isPlaying) return;
+    const id  = btn.dataset.layer;
+    const on  = !layerStates[id];
+    layerStates[id] = on;
+    btn.classList.toggle('on', on);
+
+    // Fade gain smoothly
+    layerGains[id].gain.setTargetAtTime(on ? 1 : 0, ctx.currentTime, 0.4);
+
+    // Restart scheduler when turning back ON
+    if (on) {
+      if (id === 'piano')  { schedulePiano(); scheduleChord(); }
+      if (id === 'guitar')   scheduleGuitar();
+      if (id === 'chimes')   scheduleChimes();
+      if (id === 'birds')    scheduleBirds();
+      // river & wind are continuous buffer loops — gain restore is enough
+    }
+  });
+});
+
+/* ════════════ SLIDERS ════════════ */
+document.getElementById('volSlider').addEventListener('input', e => {
+  if (masterGain) masterGain.gain.setTargetAtTime(e.target.value/100, ctx.currentTime, 0.1);
+});
+document.getElementById('reverbSlider').addEventListener('input', e => {
+  if (reverbGain && dryGain) {
+    const v = e.target.value / 100;
+    reverbGain.gain.setTargetAtTime(v,        ctx.currentTime, 0.1);
+    dryGain.gain.setTargetAtTime(1.1-v*0.6,   ctx.currentTime, 0.1);
+  }
+});
+
+/* ════════════ PARTICLES ════════════ */
+function spawnParticles() {
+  if (!isPlaying) return;
+  const p = document.createElement('div'); p.className='particle';
+  const sz = 2 + Math.random()*4;
+  p.style.cssText = `width:${sz}px;height:${sz}px;left:${10+Math.random()*80}%;bottom:${10+Math.random()*30}%;animation-duration:${3+Math.random()*4}s;animation-delay:${Math.random()*0.5}s;opacity:0;`;
+  document.getElementById('particles').appendChild(p);
+  setTimeout(() => p.remove(), 7000);
+  setTimeout(spawnParticles, 600 + Math.random()*1200);
+}
+
+function spawnLeaf() {
+  const l = document.createElement('div'); l.className='leaf-deco';
+  l.textContent = ['🍃','🌿','✿','❀'][Math.floor(Math.random()*4)];
+  l.style.cssText = `left:${Math.random()*100}%;animation-duration:${12+Math.random()*10}s;animation-delay:${Math.random()*2}s;`;
+  document.body.appendChild(l);
+  setTimeout(() => l.remove(), 24000);
+  setTimeout(spawnLeaf, 3000 + Math.random()*5000);
+}
+spawnLeaf();
+
+/* ════════════ PWA INSTALL ════════════
+   Button is always visible as a hint.
+   On browsers that support install (Chrome/Edge/Android),
+   clicking it fires the native "Add to Home Screen" prompt.
+   On iOS Safari, it shows instructions to use Share → Add to Home Screen.
+════════════════════════════════════════ */
+const installBtn = document.getElementById('installBtn');
+let deferredPrompt = null;
+
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  // Already visible — nothing else needed
+});
+
+installBtn.addEventListener('click', async () => {
+  if (deferredPrompt) {
+    // Chrome / Android — native install dialog
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    if (outcome === 'accepted') installBtn.classList.add('hidden');
+  } else {
+    // iOS Safari — show friendly instructions
+    alert('To install on iPhone/iPad:\n\n1. Tap the Share button (box with arrow)\n2. Scroll down and tap "Add to Home Screen"\n3. Tap "Add" — done! 🌿');
+  }
+});
+
+window.addEventListener('appinstalled', () => installBtn.classList.add('hidden'));
+
+/* ════════════ SERVICE WORKER ════════════ */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js')
+      .then(r  => console.log('[PWA] SW registered', r.scope))
+      .catch(e => console.log('[PWA] SW error', e));
+  });
+}
+</script>
+</body>
+</html>
